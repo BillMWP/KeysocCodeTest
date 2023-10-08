@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="160" id="KGk-i7-Jjw" customClass="SongSearchResultCell" customModule="KeysocCodeTest" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="323" height="70"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7KW-ZQ-Aa7">
+                        <rect key="frame" x="5" y="5" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="JQC-fF-F0l"/>
+                            <constraint firstAttribute="height" constant="60" id="USt-aS-5Fu"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="gjI-Ac-XyX">
+                        <rect key="frame" x="70" y="15" width="203" height="40"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AvB-Tg-kqw">
+                                <rect key="frame" x="0.0" y="0.0" width="203" height="20.333333333333332"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpF-fb-c6S">
+                                <rect key="frame" x="0.0" y="25.333333333333339" width="203" height="14.666666666666668"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="gaZ-gb-iWM"/>
+                        </constraints>
+                    </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KNe-Ur-ca8">
+                        <rect key="frame" x="273" y="0.0" width="50" height="70"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aN7-xA-3w0">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="70"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="bookmarkClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="obf-OD-9ju"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="aN7-xA-3w0" secondAttribute="trailing" id="LPp-0D-BOI"/>
+                            <constraint firstItem="aN7-xA-3w0" firstAttribute="top" secondItem="KNe-Ur-ca8" secondAttribute="top" id="OpO-uZ-nQp"/>
+                            <constraint firstItem="aN7-xA-3w0" firstAttribute="leading" secondItem="KNe-Ur-ca8" secondAttribute="leading" id="Toe-5K-l4d"/>
+                            <constraint firstAttribute="bottom" secondItem="aN7-xA-3w0" secondAttribute="bottom" id="VKv-8s-zX5"/>
+                            <constraint firstAttribute="width" constant="50" id="r5U-Ac-tm1"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="gjI-Ac-XyX" firstAttribute="centerY" secondItem="7KW-ZQ-Aa7" secondAttribute="centerY" id="0mz-Pc-4hR"/>
+                    <constraint firstItem="KNe-Ur-ca8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Eu4-zm-Rq6"/>
+                    <constraint firstItem="KNe-Ur-ca8" firstAttribute="leading" secondItem="gjI-Ac-XyX" secondAttribute="trailing" id="OGq-Se-LHh"/>
+                    <constraint firstItem="7KW-ZQ-Aa7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="YUz-8i-1jd"/>
+                    <constraint firstAttribute="trailing" secondItem="KNe-Ur-ca8" secondAttribute="trailing" id="eme-KT-BzQ"/>
+                    <constraint firstAttribute="bottom" secondItem="7KW-ZQ-Aa7" secondAttribute="bottom" constant="5" id="giE-if-SQK"/>
+                    <constraint firstItem="7KW-ZQ-Aa7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="j9N-Ny-lEe"/>
+                    <constraint firstItem="gjI-Ac-XyX" firstAttribute="leading" secondItem="7KW-ZQ-Aa7" secondAttribute="trailing" constant="5" id="smf-gO-ayp"/>
+                    <constraint firstAttribute="bottom" secondItem="KNe-Ur-ca8" secondAttribute="bottom" id="z1Z-Xr-X0J"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="bookmarkBtn" destination="aN7-xA-3w0" id="T3G-kP-lGr"/>
+                <outlet property="songImage" destination="7KW-ZQ-Aa7" id="zwc-IP-Q2g"/>
+                <outlet property="songType" destination="xpF-fb-c6S" id="wrg-Wv-QcO"/>
+                <outlet property="trackName" destination="AvB-Tg-kqw" id="jDu-QB-b1p"/>
+            </connections>
+            <point key="canvasLocation" x="28.244274809160306" y="60.563380281690144"/>
+        </tableViewCell>
+    </objects>
+</document>
