@@ -25,3 +25,5 @@ User click the bookmark icon in the search result will store the whole model to 
 Also if it is bookmarked, click the bookmark icon again will delete it from local database, same logic in bookmark page.
 For bookmark page, the display logic is same with search page, but the data source is from local database instead.
 Everytime user click the home tab bar to display bookmark page, in "viewWillAppear" lifecycle, the data will be fetched again from database -> assign to the 3 lists -> assign to displayList -> update table view listing
+
+Language: Impletemented by localization string file, the language is base on system setting, support Chinese(Hong kong), Chinese(simplified), English
