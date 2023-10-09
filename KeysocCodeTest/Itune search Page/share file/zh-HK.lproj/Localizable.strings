@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  KeysocCodeTest
+
+  Created by BillBill on 9/10/2023.
+  
+*/
+"Songs" = "歌曲";
+"Albums" = "專輯";
+"Artists" = "藝人";

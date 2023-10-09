@@ -27,11 +27,10 @@ class DBService {
         return self.database.objects(object)
     }
     
+    //get all data from target object type, delete one 
     func deleteData<T: Object>(object: T.Type, query: @escaping ((T) -> Bool)) {
         let objects = self.getData(object: object.self)
         let target = objects.first(where: {query($0)})
-        print("--m ob", objects.count)
-        print("--m target", target == nil)
         try! self.database.write{
             if let target = target{
                 self.database.delete(target)

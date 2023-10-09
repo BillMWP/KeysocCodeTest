@@ -23,6 +23,7 @@ class ItunesAPIVM: NSObject {
     var albumPageInfo:PageLoadingInfo = (1, true)
     var artistPageInfo:PageLoadingInfo = (1, true)
     let fixPageSize: Int = 20
+    let tabs = ["Songs".localized, "Albums".localized, "Artists".localized]
     
     var displayList: BehaviorRelay<[AnyObject]> = .init(value: [])
     var currentDisplayType: SearchEntity = .song
@@ -128,5 +129,11 @@ class ItunesAPIVM: NSObject {
             guard let model = model as? ArtistModel else { return false}
             return Array(DBService.shared.getData(object: BKArtistModel.self)).contains(where: {$0.artistID == model.artistID})
         }
+    }
+}
+
+extension String {
+    var localized: String {
+        return Bundle.main.localizedString(forKey: self, value: "", table: nil)
     }
 }

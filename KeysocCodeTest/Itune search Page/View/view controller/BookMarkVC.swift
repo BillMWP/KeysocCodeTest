@@ -16,7 +16,6 @@ class BookMarkVC: UIViewController {
     
     let disposeBag = DisposeBag.init()
     let vm = ItunesAPIVM()
-    let tabs = ["Songs", "Albums", "Artists"]
     private let pagingMenuVC = PagingMenuViewController.init()
     var getCurrentIndex: Int { get { return self.pagingMenuVC.currentFocusedIndex ?? 0 } }
     
@@ -79,12 +78,12 @@ class BookMarkVC: UIViewController {
 
 extension BookMarkVC: PagingMenuViewControllerDataSource {
     func numberOfItemsForMenuViewController(viewController: PagingMenuViewController) -> Int {
-        return self.tabs.count
+        return self.vm.tabs.count
     }
     
     func menuViewController(viewController: PagingMenuViewController, cellForItemAt index: Int) -> PagingMenuViewCell {
         if let cell = viewController.dequeueReusableCell(withReuseIdentifier: "PagingNormalView", for: index) as? PagingNormalView {
-            cell.titleLabel.text = self.tabs[index]
+            cell.titleLabel.text = self.vm.tabs[index]
             return cell
         }
         return PagingNormalView.init()
