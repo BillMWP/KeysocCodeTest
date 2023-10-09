@@ -157,6 +157,7 @@ extension ItuneSearchVC: PagingMenuViewControllerDataSource {
     }
 }
 
+// MARK: 3 type of cell's delegate
 extension ItuneSearchVC: SongSearchResultCellDelegate {
     func bookmarkDidClick(bookmark: Bool, model: SongModel) {
         bookmark ? DBService.shared.addData(model: model.generateBKModel()) : DBService.shared.deleteData(object: BKSongModel.self, query: {$0.trackID == model.trackID})

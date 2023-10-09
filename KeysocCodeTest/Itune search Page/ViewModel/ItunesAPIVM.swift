@@ -19,12 +19,14 @@ enum FetchPurpose {
 
 class ItunesAPIVM: NSObject {
     typealias PageLoadingInfo = (page: Int, shouldLoadMore: Bool)
+    // for store data for 3 tabs
     var songPageInfo:PageLoadingInfo = (1, true)
     var albumPageInfo:PageLoadingInfo = (1, true)
     var artistPageInfo:PageLoadingInfo = (1, true)
     let fixPageSize: Int = 20
     let tabs = ["Songs".localized, "Albums".localized, "Artists".localized]
     
+    // for display
     var displayList: BehaviorRelay<[AnyObject]> = .init(value: [])
     var currentDisplayType: SearchEntity = .song
     
@@ -34,6 +36,7 @@ class ItunesAPIVM: NSObject {
     
     func fetchData(searchKeyWotd: String = "", purpose: FetchPurpose, entity: SearchEntity) {
         var targetPage = 1
+        // select target page num
         switch entity {
         case .song:
             self.songPageInfo.page = purpose == .initial ? 1 : self.songPageInfo.page + 1
@@ -46,6 +49,7 @@ class ItunesAPIVM: NSObject {
             targetPage = self.artistPageInfo.page
         }
         
+        // construct api url
         let keys = searchKeyWotd.split(separator: " ")
         guard let url = URL(string: "https://itunes.apple.com/search?term=\(keys.joined(separator: "+"))&entity=\(entity.rawValue)&limit=\(targetPage * self.fixPageSize)") else { return }
         print("fetch info: ", searchKeyWotd, entity.rawValue)
@@ -81,6 +85,7 @@ class ItunesAPIVM: NSObject {
     }
     
     func getCell(item: AnyObject, tv: UITableView, vc: UIViewController) -> UITableViewCell{
+        // define which type of table view cell
         if let item = item as? SongModel, self.currentDisplayType == .song {
             let cell = tv.dequeueReusableCell(withIdentifier: "SongSearchResultCell") as? SongSearchResultCell
             cell?.bookMarked.accept(self.checkBookMarked(model: item, entity: .song))
