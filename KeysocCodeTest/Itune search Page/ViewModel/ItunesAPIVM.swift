@@ -12,6 +12,15 @@ import RxRelay
 // MARK: two vc share same vm
 enum SearchEntity: String {
     case song = "song", album = "album", artist = "allArtist"
+    
+    static func getEntityWithPage(page: Int) -> SearchEntity {
+        switch page {
+        case 0: return .song
+        case 1: return .album
+        case 2: return .artist
+        default: return .song
+        }
+    }
 }
 enum FetchPurpose {
     case initial, loadmore
@@ -24,6 +33,7 @@ class ItunesAPIVM: NSObject {
     var albumPageInfo:PageLoadingInfo = (1, true)
     var artistPageInfo:PageLoadingInfo = (1, true)
     let fixPageSize: Int = 20
+    static var test = false
     let tabs = ["Songs".localized, "Albums".localized, "Artists".localized]
     
     // for display
@@ -62,18 +72,21 @@ class ItunesAPIVM: NSObject {
                     case .song:
                         let result = try JSONDecoder().decode(SongListModel.self, from: data).results.map({$0 as AnyObject})
                         if (purpose == .loadmore && result.count > self.songList.value.count) ||
-                            (purpose == .initial){ self.songList.accept(result) }
-                        else { self.songPageInfo.shouldLoadMore = false}
+                            (purpose == .initial){
+                            self.songList.accept(result)
+                        } else { self.songPageInfo.shouldLoadMore = false}
                     case .artist:
                         let result = try JSONDecoder().decode(ArtistListModel.self, from: data).results.map({$0 as AnyObject})
                         if (purpose == .loadmore && result.count > self.artistList.value.count) ||
-                            (purpose == .initial){ self.artistList.accept(result) }
-                        else { self.artistPageInfo.shouldLoadMore = false}
+                            (purpose == .initial){
+                            self.artistList.accept(result)
+                        } else { self.artistPageInfo.shouldLoadMore = false}
                     case .album:
                         let result = try JSONDecoder().decode(AlbumListModel.self, from: data).results.map({$0 as AnyObject})
                         if (purpose == .loadmore && result.count > self.albumList.value.count) ||
-                            (purpose == .initial){ self.albumList.accept(result) }
-                        else { self.albumPageInfo.shouldLoadMore = false}
+                            (purpose == .initial){
+                            self.albumList.accept(result)
+                        } else { self.albumPageInfo.shouldLoadMore = false}
                     }
                 } catch {
                     print("--m url", url.absoluteString)

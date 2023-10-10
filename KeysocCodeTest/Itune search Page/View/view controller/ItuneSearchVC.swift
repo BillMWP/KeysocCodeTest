@@ -35,6 +35,13 @@ class ItuneSearchVC: UIViewController, UISearchBarDelegate {
 //        models.forEach({print("--m", $0.trackName)})
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if ItunesAPIVM.test {
+            self.vm.displayList.accept(self.vm.displayList.value)
+            ItunesAPIVM.test.toggle()
+        }
+    }
+    
     private func setupTv() {
         self.tv.register(.init(nibName: "SongSearchResultCell", bundle: nil), forCellReuseIdentifier: "SongSearchResultCell")
         self.tv.register(.init(nibName: "AlbumSearchResultCell", bundle: nil), forCellReuseIdentifier: "AlbumSearchResultCell")
@@ -52,11 +59,10 @@ class ItuneSearchVC: UIViewController, UISearchBarDelegate {
         Observable.combineLatest(self.vm.songList, self.vm.albumList, self.vm.artistList)
             .subscribe(onNext: { [weak self] songList, albumList, artistList in
                 guard let self = self else { return }
-                switch self.getCurrentIndex {
-                case 0: self.vm.displayList.accept(songList)
-                case 1: self.vm.displayList.accept(albumList)
-                case 2: self.vm.displayList.accept(artistList)
-                default: break
+                switch self.vm.currentDisplayType {
+                case .song: self.vm.displayList.accept(songList)
+                case .album: self.vm.displayList.accept(albumList)
+                case .artist: self.vm.displayList.accept(artistList)
                 }
             }).disposed(by: self.disposeBag)
     }
@@ -124,17 +130,15 @@ extension ItuneSearchVC: UITableViewDelegate {
 // MARK: Paging Tab delegate
 extension ItuneSearchVC: PagingMenuViewControllerDelegate {
     func menuViewController(viewController: PagingKit.PagingMenuViewController, didSelect page: Int, previousPage: Int) {
-        switch page {
-        case 0:
+        let currentEntity = SearchEntity.getEntityWithPage(page: page)
+        self.vm.currentDisplayType = currentEntity
+        switch currentEntity {
+        case .song:
             self.vm.displayList.accept(self.vm.songList.value)
-            self.vm.currentDisplayType = .song
-        case 1:
+        case .album:
             self.vm.displayList.accept(self.vm.albumList.value)
-            self.vm.currentDisplayType = .album
-        case 2:
+        case .artist:
             self.vm.displayList.accept(self.vm.artistList.value)
-            self.vm.currentDisplayType = .artist
-        default: break
         }
     }
 }

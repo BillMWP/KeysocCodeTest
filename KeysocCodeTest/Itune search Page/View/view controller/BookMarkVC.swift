@@ -65,11 +65,10 @@ class BookMarkVC: UIViewController {
         Observable.combineLatest(self.vm.songList, self.vm.albumList, self.vm.artistList)
             .subscribe(onNext: { [weak self] songList, albumList, artistList in
                 guard let self = self else { return }
-                switch self.getCurrentIndex {
-                case 0: self.vm.displayList.accept(songList)
-                case 1: self.vm.displayList.accept(albumList)
-                case 2: self.vm.displayList.accept(artistList)
-                default: break
+                switch self.vm.currentDisplayType {
+                case .song: self.vm.displayList.accept(songList)
+                case .album: self.vm.displayList.accept(albumList)
+                case .artist: self.vm.displayList.accept(artistList)
                 }
             }).disposed(by: self.disposeBag)
     }
@@ -102,23 +101,22 @@ extension BookMarkVC: UITableViewDelegate {
 
 extension BookMarkVC: PagingMenuViewControllerDelegate {
     func menuViewController(viewController: PagingKit.PagingMenuViewController, didSelect page: Int, previousPage: Int) {
-        switch page {
-        case 0:
+        let currentEntity = SearchEntity.getEntityWithPage(page: page)
+        self.vm.currentDisplayType = currentEntity
+        switch currentEntity {
+        case .song:
             self.vm.displayList.accept(self.vm.songList.value)
-            self.vm.currentDisplayType = .song
-        case 1:
+        case .album:
             self.vm.displayList.accept(self.vm.albumList.value)
-            self.vm.currentDisplayType = .album
-        case 2:
+        case .artist:
             self.vm.displayList.accept(self.vm.artistList.value)
-            self.vm.currentDisplayType = .artist
-        default: break
         }
     }
 }
 
 extension BookMarkVC: SongSearchResultCellDelegate {
     func bookmarkDidClick(bookmark: Bool, model: SongModel) {
+        ItunesAPIVM.test = true
         DBService.shared.deleteData(object: BKSongModel.self, query: {$0.trackID == model.trackID})
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             self.vm.getDataFromDB()
@@ -128,6 +126,7 @@ extension BookMarkVC: SongSearchResultCellDelegate {
 
 extension BookMarkVC: AlbumSearchResultCellDelegate {
     func bookmarkDidClick(bookmark: Bool, model: AlbumModel) {
+        ItunesAPIVM.test = true
         DBService.shared.deleteData(object: BKAlbumModel.self, query: {$0.collectionID == model.collectionID})
         self.vm.getDataFromDB()
     }
@@ -135,6 +134,7 @@ extension BookMarkVC: AlbumSearchResultCellDelegate {
 
 extension BookMarkVC: ArtistSearchResultCellDelegate {
     func bookmarkDidClick(bookmark: Bool, model: ArtistModel) {
+        ItunesAPIVM.test = true
         DBService.shared.deleteData(object: BKArtistModel.self, query: {$0.artistID == model.artistID})
         self.vm.getDataFromDB()
     }
